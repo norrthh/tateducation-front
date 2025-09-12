@@ -95,14 +95,243 @@
     --foreground: #171717;
 }
 
-@theme inline {
+/* @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-}
+} */
 
 body {
     background: var(--background);
     color: var(--foreground);
     font-family: 'Montserrat', sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 31px;
+    margin-bottom: 27px;
+}
+
+.profile_info {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+
+.profile_hello {
+    font-weight: 500;
+    color: #0F3B49B2;
+    font-size: 11px;
+}
+
+.profile_name {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.user_exp {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0F3B49;
+    padding: 5px 12px;
+    border: 1px solid #154734;
+    border-radius: 5px;
+}
+
+.chapter {
+    padding: 18px 27px;
+    background-color: #154734;
+    border-radius: 10px;
+    color: #fff;
+    background-image: url('/images/chapter_bg.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+}
+
+.chapter_type {
+    font-size: 8px;
+    font-weight: 500;
+    padding: 2px 8px;
+    background-color: rgb(255, 255, 255, 16%);
+    border: 1px solid  rgb(255, 255, 255, 22%);
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.chapter_level {
+    margin-top: 11px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.chapter_description {
+    margin-top: 3px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.chapter_button {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 6px 11px;
+    background-color: #C8102E;
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.progress {
+    margin-top: 35px;
+}
+
+.my_progress {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0F3B49;
+}
+
+.progress_cards {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.progress_card {
+    padding-top: 11px;
+    padding-bottom: 17px;
+    /* padding-right: 13px; */
+    border: 1px solid #154734;
+    border-radius: 10px;
+}
+
+.progress_icon {
+    margin-left: 6px;
+    margin-bottom: 3px;
+}
+
+.progress_type {
+    color: #0F3B49;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 12px;
+}
+
+.your_progress {
+    color: #0F3B49;
+    font-size: 9px;
+    font-weight: 500;
+    margin-left: 12px;
+    margin-top: 2px;
+}
+
+.progress_bar {
+    margin-top: 11px;
+    margin-left: 12px;
+    height: 4px;
+    width: 115px;
+    background-color: #77A28F;
+    border-radius: 50px;
+    margin-right: 13px;
+}
+
+.progress_fill {
+    height: 100%;
+    background-color: #154734;
+    width: 51%;
+    border-radius: 50px;
+}
+
+.user_top {
+    margin-top: 35px;
+}
+
+.user_top_title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0F3B49;
+    margin-bottom: 20px;
+}
+
+.user_top_item {
+    background-color: #154734;
+    padding: 8px;
+    border-radius: 10px;
+    color: #FFF;
+    margin-top: 10px;
+    position: relative;
+    background-image: url('/images/top_bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+}
+
+.user_top_item_info {
+    display: flex;
+    gap: 7px;
+}
+
+.user_top_item_name {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.user_top_item_exp {
+    font-size: 9px;
+    font-weight: 500;
+}
+
+.user_top_item:nth-child(2)::after {
+    content: url('/images/noto_1st-place-medal.png');
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    right: 10;
+    top: 10;
+}
+
+.user_top_item:nth-child(3)::after {
+    content: url('/images/noto_2nd-place-medal.png');
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    right: 10;
+    top: 10;
+}
+
+.user_top_item:nth-child(4)::after {
+    content: url('/images/noto_3rd-place-medal.png');
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    right: 10;
+    top: 10;
+}
+
+.nav-bar {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    justify-content: space-around;
+    height: 51px;
+    background-color: #fff;
+    align-items: center;
+    border-top: 1px solid #154734;
+}
+
+.nav-item {
+    padding: 8px 10px;
+    display: block;
+}
+
+.active {
+    border-bottom: 2px solid #154734;
 }
 
