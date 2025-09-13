@@ -1,14 +1,18 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Image from "next/image";
 import {useI18n} from "@/i18n/I18nProvider";
+import useSiteStore from "@/store/useSiteStore";
 
 export default function Register() {
     const [step, setStep] = useState<number>(0);
     const {lang, setLang, t} = useI18n();
     const [level, setLevel] = useState<string>('junior')
     const [goal, setGoal] = useState<number>(10)
+
+    const { setFooter } = useSiteStore();
+    useEffect(() => { setFooter(false); }, [setFooter]);
 
     const getBtnLanguageClass = (code: "ru" | "tt") =>
         lang === code
@@ -178,7 +182,13 @@ export default function Register() {
             )}
 
             <button className="bg-[var(--destructive)] w-full p-4 text-white rounded-xl font-semibold absolute bottom-[50px]"
-                    onClick={() => setStep(step + 1)}>
+                    onClick={() => {
+                        if (step < 3) {
+                            setStep(step + 1)
+                        } else {
+                            window.location.href = '/'
+                        }
+                    }}>
                 {t("next")}
             </button>
         </div>

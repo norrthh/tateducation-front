@@ -108,14 +108,15 @@ export default function RootLayout({
     return (
         <html lang="ru">
         <body
-            className={`${unbounded.variable} ${openSans.variable} font-[unbounded] antialiased max-w-xl mx-auto h-screen overflow-hidden`}
+            className={`${unbounded.variable} ${openSans.variable} font-[unbounded] antialiased max-w-xl mx-auto h-screen overflow-hidden text-white`}
         >
         <div className="z-40 relative h-full px-4"
              style={{'paddingTop': (insets.top !== 0 ? insets.top + 20 : 0)}}>
             <I18nProvider>
-                <div className="mt-[31px]">
+                <div className="mt-[31px] mb-[31px] h-full">
                     {children}
                 </div>
+
                 {footer && (
                     <>
                         <Footer/>
