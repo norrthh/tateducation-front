@@ -26,7 +26,7 @@ const useTelegramStore = create<TelegramInterfaceStore>((set) => ({
         last_name: '',
         username: '',
         is_premium: false,
-        photo_url: '',
+        photo_url: '/images/user_icon.png',
         lang: ''
     },
     setTelegramUser: (telegramUser) => set({ telegramUser }),

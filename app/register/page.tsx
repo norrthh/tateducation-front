@@ -12,17 +12,17 @@ export default function Register() {
 
     const getBtnLanguageClass = (code: "ru" | "tt") =>
         lang === code
-            ? "w-full text-start p-3 bg-[#154734] text-white rounded-xl"
+            ? "w-full text-start p-3 bg-[var(--main)] text-white rounded-xl"
             : "w-full text-start p-3 text-[#0F3B49] rounded-xl border border-[#52727B]";
 
     const getBtnLevelClass = (code: "junior" | "middle" | "senior") =>
         level === code
-            ? "w-full text-start p-3 bg-[#154734] text-white rounded-xl"
+            ? "w-full text-start p-3 bg-[var(--main)] text-white rounded-xl"
             : "w-full text-start p-3 text-[#0F3B49] rounded-xl border border-[#52727B]";
 
     const getBtnGoalClass = (code: 10 | 15 | 20 | 25 | 30) =>
         goal === code
-            ? "w-full text-center p-3 bg-[#154734] text-white rounded-3xl"
+            ? "w-full text-center p-3 bg-[var(--main)] text-white rounded-3xl"
             : "w-full text-center p-3 text-[#0F3B49] rounded-3xl border border-[#52727B]";
 
     return (
