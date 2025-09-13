@@ -13,17 +13,17 @@ export default function Register() {
     const getBtnLanguageClass = (code: "ru" | "tt") =>
         lang === code
             ? "w-full text-start p-3 bg-[var(--main)] text-white rounded-xl"
-            : "w-full text-start p-3 text-[#0F3B49] rounded-xl border border-[#52727B]";
+            : "w-full text-start p-3 text-[var(--h1)] rounded-xl border border-[#52727B]";
 
     const getBtnLevelClass = (code: "junior" | "middle" | "senior") =>
         level === code
-            ? "w-full text-start p-3 bg-[var(--main)] text-white rounded-xl"
-            : "w-full text-start p-3 text-[#0F3B49] rounded-xl border border-[#52727B]";
+            ? "w-full text-start p-3 bg-[#4DBF92] text-white rounded-xl"
+            : "w-full text-start p-3 text-[var(--h1)] rounded-xl border border-[#4DBF92]";
 
     const getBtnGoalClass = (code: 10 | 15 | 20 | 25 | 30) =>
         goal === code
-            ? "w-full text-center p-3 bg-[var(--main)] text-white rounded-3xl"
-            : "w-full text-center p-3 text-[#0F3B49] rounded-3xl border border-[#52727B]";
+            ? "w-full text-center p-3 bg-[#4DBF92] text-white rounded-3xl"
+            : "w-full text-center p-3 text-[var(--h1)] rounded-3xl border border-[#4DBF92]";
 
     return (
         <div className="relative h-full">
@@ -31,9 +31,9 @@ export default function Register() {
                 <div className="flex items-center h-full flex-col gap-10 justify-center relative">
                     <Image src="/images/bars.svg" alt="bars" width={200} height={220} className="mx-auto"/>
 
-                    <h1 className="text-2xl font-bold text-center text-[#0F3B49]"
+                    <h1 className="text-2xl font-bold text-center text-[var(--h1)]"
                         dangerouslySetInnerHTML={{__html: t("welcome_title").replace("\n", "<br/>")}}/>
-                    <p className="font-medium text-sm text-center text-[#0F3B49]">{t("welcome_desc")}</p>
+                    <p className="font-medium text-sm text-center text-[var(--muted)]">{t("welcome_desc")}</p>
                 </div>
             )}
 
@@ -58,8 +58,8 @@ export default function Register() {
                     </div>
 
                     <div className="flex gap-4 flex-col">
-                        <h1 className="text-2xl font-bold text-[#0F3B49]">{t("choose_lang_title")}</h1>
-                        <p className="font-medium text-sm text-[#0F3B49]">{t("choose_lang_desc")}</p>
+                        <h1 className="text-2xl font-bold text-[var(--h1)]">{t("choose_lang_title")}</h1>
+                        <p className="font-medium text-sm text-[var(--muted)]">{t("choose_lang_desc")}</p>
                     </div>
 
                     <div className="flex gap-4 flex-col font-medium text-sm">
@@ -71,7 +71,7 @@ export default function Register() {
                         </button>
 
                         <button className={getBtnLanguageClass("tt")} onClick={() => setLang("tt")}>
-                            <span className="flex gap-4 items-center">
+                            <span className="flex gap-4 items-center ">
                                 <Image src="/images/tat-flag.svg" alt="tt" width={30} height={30}/>
                                 {t("tatar")}
                             </span>
@@ -101,8 +101,8 @@ export default function Register() {
                     </div>
 
                     <div className="flex gap-4 flex-col">
-                        <h1 className="text-2xl font-bold text-[#0F3B49]">{t("choose_lang_title")}</h1>
-                        <p className="font-medium text-sm text-[#0F3B49]">{t("choose_lang_desc")}</p>
+                        <h1 className="text-2xl font-bold text-[var(--h1)]">{t("choose_lang_title")}</h1>
+                        <p className="font-medium text-sm text-[var(--muted)]">{t("choose_lang_desc")}</p>
                     </div>
 
                     <div className="flex gap-4 flex-col font-medium text-sm">
@@ -142,8 +142,8 @@ export default function Register() {
                     </div>
 
                     <div className="flex gap-4 flex-col">
-                        <h1 className="text-2xl font-bold text-[#0F3B49]">{t("goals.title")}</h1>
-                        <p className="font-medium text-sm text-[#0F3B49]">{t("goals.description")}</p>
+                        <h1 className="text-2xl font-bold text-[var(--h1)]">{t("goals.title")}</h1>
+                        <p className="font-medium text-sm text-[var(--muted)]">{t("goals.description")}</p>
                     </div>
 
                     <div className="grid grid-cols-3 gap-4 font-medium text-sm justify-center">
@@ -177,7 +177,7 @@ export default function Register() {
                 </div>
             )}
 
-            <button className="bg-[#C8102E] w-full p-4 text-white rounded-xl font-semibold absolute bottom-[50px]"
+            <button className="bg-[var(--destructive)] w-full p-4 text-white rounded-xl font-semibold absolute bottom-[50px]"
                     onClick={() => setStep(step + 1)}>
                 {t("next")}
             </button>

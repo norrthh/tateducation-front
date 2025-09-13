@@ -118,7 +118,6 @@ export default function RootLayout({
                 </div>
                 {footer && (
                     <>
-                        {footer ? 1 : 2}
                         <Footer/>
                     </>
                 )}

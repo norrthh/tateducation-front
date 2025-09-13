@@ -29,8 +29,8 @@ const tasks: Task[] = [
         cover: '/images/bookapple.svg',
         variant: 'filled',
         items: [
-            {id: 11, title: 'Грамматика', status: 'done', icon: '/images/gramm.svg'},
-            {id: 12, title: 'Аудирование', status: 'in-progress', icon: '/images/success.svg'},
+            {id: 11, title: 'Грамматика', status: 'in-progress', icon: '/images/gramm.svg'},
+            {id: 12, title: 'Аудирование', status: 'done', icon: '/images/success.svg'},
             {id: 13, title: 'Письмо', status: 'in-progress', icon: '/images/pismo.svg'},
         ],
     },
@@ -94,7 +94,7 @@ export default function Home() {
 
     return (
         <div>
-            <h1 className="font-bold text-2xl text-[#0F3B49]">Задания</h1>
+            <h1 className="font-bold text-2xl text-[var(--h1)]">Задания</h1>
 
             <div className="flex flex-col gap-2 h-[80vh] overflow-y-auto scrollbar-hide pt-4">
                 {tasks.map(task => {
@@ -112,13 +112,13 @@ export default function Home() {
                                     'w-full rounded-2xl p-5 text-left transition-colors',
                                     isFilled
                                         ? 'bg-[var(--main)] text-white'
-                                        : 'border-2 border-[var(--main)] text-[#0F3B49]',
+                                        : 'border-2 border-[var(--main)] text-white',
                                 ].join(' ')}
                             >
                                 <div className="flex gap-4 items-center">
                                     <div className="min-w-0">
                                         <h2 className="text-xl font-bold">{task.chapter}</h2>
-                                        <p className={['text-sm font-medium pt-[3px] pb-[9px]', isFilled ? '' : 'text-[#0F3B49]'].join(' ')}>
+                                        <p className={['text-sm font-medium pt-[3px] pb-[9px]', isFilled ? '' : 'text-white'].join(' ')}>
                                             {task.subtitle}
                                         </p>
                                         <div className="flex gap-4 items-center">
@@ -156,9 +156,9 @@ export default function Home() {
                                             >
                                                 <div className="flex items-center gap-3">
                                                     <div>
-                                                        <h3 className="font-bold text-lg text-[#154734]">{item.title}</h3>
+                                                        <h3 className="font-bold text-lg text-white">{item.title}</h3>
                                                         {item.status === 'done' && (
-                                                            <p className="text-sm text-[#0F3B49] font-medium text-start">Завершено</p>
+                                                            <p className="text-sm text-white font-medium text-start">Завершено</p>
                                                         )}
                                                     </div>
 
