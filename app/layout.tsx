@@ -18,6 +18,7 @@ import {
 import {I18nProvider} from "@/i18n/I18nProvider";
 import Footer from "@/components/footer";
 import useSiteStore from "@/store/useSiteStore";
+import apiClient from "@/axios";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -73,6 +74,27 @@ export default function RootLayout({
                         photo_url: userTelegramData?.photo_url,
                         lang: userTelegramData?.language_code
                     })
+
+                    apiClient.post('/v1/users/auth', {
+                        "init_data": retrieveRawInitData()
+                    }).then(userResponse => {
+                        // if (userResponse.data.status) {
+                        //     window.location.href = '/register'
+                        //
+                        //     return ;
+                        // }
+                        // localStorage.setItem('bearer_token', userResposne.data.token)
+                        // localStorage.setItem('highScore', userResposne.data.user.pacman.coin)
+                        // localStorage.setItem('digger_best_score', userResposne.data.user.digger.coin)
+                        //
+                        // setBearerToken(userResposne.data.token)
+                        // setUser(userResposne.data.user)
+                        //
+                        //
+                        // setStatus(true)
+
+                        console.log(userResponse)
+                    });
                 } catch (error) {
                     console.log(error)
                     setStatus(false)

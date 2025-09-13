@@ -4,8 +4,6 @@ import axios from "axios";
 import useUserStore from "@/store/useUserStore";
 
 const apiClient = axios.create({
-	// baseURL: 'https://back.pac-man.online/api',
-	// baseURL: 'https://pacman-back.sukhov-family.ru/api',
 	baseURL: 'http://127.0.0.1:8000/api',
 	headers: {
 		'Content-Type': 'application/json',

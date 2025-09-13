@@ -9,6 +9,7 @@ export default function Home() {
     // useEffect(() => {
     //     window.location.href = '/register'
     // }, []);
+
     const {telegramUser} = useTelegramStore()
 
     return (
