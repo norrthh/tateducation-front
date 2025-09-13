@@ -314,7 +314,7 @@ body {
     font-weight: 500;
 }
 
-.user_top_item:nth-child(2)::after {
+.user_top_item:nth-child(1)::after {
     content: url('/images/noto_1st-place-medal.png');
     display: inline-block;
     width: 26px;
@@ -324,7 +324,7 @@ body {
     top: 10px;
 }
 
-.user_top_item:nth-child(3)::after {
+.user_top_item:nth-child(2)::after {
     content: url('/images/noto_2nd-place-medal.png');
     display: inline-block;
     width: 26px;
@@ -334,7 +334,7 @@ body {
     top: 10;
 }
 
-.user_top_item:nth-child(4)::after {
+.user_top_item:nth-child(3)::after {
     content: url('/images/noto_3rd-place-medal.png');
     display: inline-block;
     width: 26px;
