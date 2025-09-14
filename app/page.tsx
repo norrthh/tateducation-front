@@ -12,6 +12,8 @@ export default function Home() {
     const {user} = useUserStore()
     const {data: lessonData} = useLessonStore();
 
+    // console.log(lessonData?.lesson.description)
+
     useEffect(() => {
         if (!user.status) {
             window.location.href = '/register'
@@ -77,7 +79,10 @@ export default function Home() {
                     <p className="chapter_level">
                         {lessonData?.lesson?.name ? `Глава: ${lessonData.lesson.name}` : 'Глава'}
                     </p>
-                    <p className="chapter_discription">{nextUnpassed}</p>
+
+                    {JSON.stringify(lessonData?.lesson)}
+
+                    <p className="chapter_discription">{lessonData?.lesson.description}</p>
                     {/*<a href="#" className="chapter_button">Вернуться</a>*/}
                 </div>
 

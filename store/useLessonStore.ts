@@ -12,6 +12,7 @@ export interface LessonDTO {
     id: number;
     name: string;
     image: string;
+    description: string
 }
 
 export interface UserLessonsCategory {
