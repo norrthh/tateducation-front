@@ -80,7 +80,7 @@ export default function Home() {
                         {lessonData?.lesson?.name ? `Глава: ${lessonData.lesson.name}` : 'Глава'}
                     </p>
 
-                    {JSON.stringify(lessonData?.lesson)}
+                    {/*{JSON.stringify(lessonData?.lesson)}*/}
 
                     <p className="chapter_discription">{lessonData?.lesson.description}</p>
                     {/*<a href="#" className="chapter_button">Вернуться</a>*/}
