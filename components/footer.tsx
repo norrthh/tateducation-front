@@ -20,7 +20,7 @@ const Footer = () => {
             </Link>
 
             <Link
-                href="/"
+                href="/translate"
                 className={`nav-item ${isActive("/translate", true) ? "active" : ""}`}
                 aria-current={isActive("/translate", true) ? "page" : undefined}
             >
@@ -43,7 +43,7 @@ const Footer = () => {
             </a>
 
             <Link
-                href="/"
+                href="/shop"
                 className={`nav-item ${isActive("/shop", true) ? "active" : ""}`}
                 aria-current={isActive("/shop", true) ? "page" : undefined}
             >
