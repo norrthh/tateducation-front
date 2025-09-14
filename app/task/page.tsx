@@ -1,7 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import apiClient from "@/axios";
 
 type LessonItem = {
     id: number
@@ -20,77 +21,28 @@ type Task = {
     items?: LessonItem[]
 }
 
-const tasks: Task[] = [
-    {
-        id: 1,
-        chapter: 'Глава 1',
-        subtitle: 'Важные фразы на татарском языке',
-        progress: 0.8,
-        cover: '/images/bookapple.svg',
-        variant: 'filled',
-        items: [
-            {id: 11, title: 'Грамматика', status: 'in-progress', icon: '/images/gramm.svg'},
-            {id: 12, title: 'Аудирование', status: 'done', icon: '/images/success.svg'},
-            {id: 13, title: 'Письмо', status: 'in-progress', icon: '/images/pismo.svg'},
-        ],
-    },
-    {
-        id: 2,
-        chapter: 'Глава 2',
-        subtitle: 'Приветствия и диалоги',
-        progress: 1,
-        cover: '/images/success.svg',
-        variant: 'outline',
-        items: [
-            {id: 21, title: 'Грамматика', status: 'done', icon: '/images/gramm.svg'},
-            {id: 22, title: 'Аудирование', status: 'done', icon: '/images/success.svg'},
-            {id: 23, title: 'Письмо', status: 'done', icon: '/images/pismo.svg'},
-        ],
-    },
-    {
-        id: 3,
-        chapter: 'Глава 3',
-        subtitle: 'Семья и знакомство',
-        progress: 0.35,
-        cover: '/images/bookapple.svg',
-        variant: 'outline',
-        items: [
-            {id: 31, title: 'Грамматика', status: 'in-progress', icon: '/images/gramm.svg'},
-            {id: 32, title: 'Аудирование', status: 'in-progress', icon: '/images/success.svg'},
-            {id: 33, title: 'Письмо', status: 'in-progress', icon: '/images/pismo.svg'},
-        ],
-    },
-    {
-        id: 4,
-        chapter: 'Глава 3',
-        subtitle: 'Семья и знакомство',
-        progress: 0.35,
-        cover: '/images/bookapple.svg',
-        variant: 'outline',
-        items: [
-            {id: 31, title: 'Грамматика', status: 'in-progress', icon: '/images/gramm.svg'},
-            {id: 32, title: 'Аудирование', status: 'in-progress', icon: '/images/success.svg'},
-            {id: 33, title: 'Письмо', status: 'in-progress', icon: '/images/pismo.svg'},
-        ],
-    },
-]
-
 export default function Home() {
     const [openId, setOpenId] = useState<number | null>(null)
 
+    const [tasks, setTasks] = useState<Task[]>([])
+
     const toggle = (task: Task) => {
-        if (task.progress !== 1) {
+        // if (task.progress !== 1) {
             setOpenId(prev => (prev === task.id ? null : task.id))
-        }
+        // }
     }
 
     const openTaskItem = (task: LessonItem, taskId: number) => {
-        // console.log(Task)
-        // console.log('task-id:' + taskId)
         if (task.status === 'in-progress') {
             window.location.href = '/task/' + taskId + '/' + task.id
         }
     }
+
+    useEffect(() => {
+        apiClient.get('/v1/users/tasks/').then(res => {
+            setTasks(res.data)
+        })
+    }, []);
 
     return (
         <div>
@@ -101,6 +53,10 @@ export default function Home() {
                     const pct = Math.round(task.progress * 100)
                     const isOpen = openId === task.id
                     const isFilled = task.variant === 'filled' || pct < 100
+
+                    // if (task.items?.length == 0) {
+                    //     return (<div key={task.id}></div>);
+                    // }
 
                     return (
                         <div key={task.id} className="flex flex-col gap-2">
@@ -144,7 +100,7 @@ export default function Home() {
                             </button>
 
                             {/* Раскрывающийся блок с уроками */}
-                            {isOpen && task.items?.length ? (
+                            {isOpen && task.items?.length && task.items?.length > 0 ? (
                                 <div className="flex flex-col gap-2">
                                     {task.items.map(item => (
                                         <button

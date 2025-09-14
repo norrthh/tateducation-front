@@ -1,21 +1,62 @@
 'use client'
 
-
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import useTelegramStore from "@/store/useUserTelegram";
 import Image from "next/image";
+import useUserStore, {TelegramUserDTO} from "@/store/useUserStore";
+import Preloader from "@/components/preloader";
+import {useLessonStore} from "@/store/useLessonStore";
+import apiClient from "@/axios";
 
 export default function Home() {
-    // useEffect(() => {
-    //     window.location.href = '/register'
-    // }, []);
+    const {user} = useUserStore()
+    const {data: lessonData} = useLessonStore();
+
+    useEffect(() => {
+        if (!user.status) {
+            window.location.href = '/register'
+        }
+    }, [user.status]);
+
     const {telegramUser} = useTelegramStore()
+
+    if (!user.status) {
+        return <Preloader/>
+    }
+
+    const grammar = lessonData?.progress.by_category.grammar ?? {
+        label: 'Грамматика',
+        percent: 0,
+        passed: false,
+    };
+    const listening = lessonData?.progress.by_category.listening ?? {
+        label: 'Аудирование',
+        percent: 0,
+        passed: false,
+    };
+    const writing = lessonData?.progress.by_category.writing ?? {
+        label: 'Письмо',
+        percent: 0,
+        passed: false,
+    };
+
+    const nextUnpassed = lessonData?.next_unpassed?.name ?? '—';
+
+    const [tops, setTops] = useState<TelegramUserDTO[]>([])
+
+    useEffect(() => {
+        apiClient.get('/v1/users/tops').then(res => {
+            console.log(res.data)
+            setTops(res.data)
+        })
+    }, [setTops]);
 
     return (
         <div>
             <header className="header">
                 <div className="profile_info">
-                    <img src={telegramUser.photo_url} alt="user pfp" className="profile_img rounded-2xl" width={42} height={42}/>
+                    <img src={telegramUser.photo_url} alt="user pfp" className="profile_img rounded-2xl" width={42}
+                         height={42}/>
                     <div className="profile_text">
                         <p className="profile_hello">
                             Привет!
@@ -26,16 +67,18 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="user_exp">
-                    393 XP
+                    {user.xp} XP
                 </div>
             </header>
 
             <main className="flex flex-col gap-2 h-[80vh] overflow-y-auto">
                 <div className="chapter">
                     <p className="chapter_type">Начальный</p>
-                    <p className="chapter_level">Глава 3</p>
-                    <p className="chapter_discription">Основные правила грамматики</p>
-                    <a href="#" className="chapter_button">Вернуться</a>
+                    <p className="chapter_level">
+                        {lessonData?.lesson?.name ? `Глава: ${lessonData.lesson.name}` : 'Глава'}
+                    </p>
+                    <p className="chapter_discription">{nextUnpassed}</p>
+                    {/*<a href="#" className="chapter_button">Вернуться</a>*/}
                 </div>
 
                 <div className="progress">
@@ -50,39 +93,48 @@ export default function Home() {
                                 width={48}
                                 height={48}
                             />
-                            <p className="progress_type">Грамматика</p>
-                            <p className="your_progress">Твой прогресс <span className="progress_percent">51%</span></p>
+                            <p className="progress_type">{grammar.label}</p>
+                            <p className="your_progress">
+                                Твой прогресс <span className="progress_percent">{grammar.percent}%</span>
+                            </p>
                             <div className="progress_bar">
-                                <div className="progress_fill"></div>
+                                <div className="progress_fill" style={{width: `${grammar.percent}%`}}/>
                             </div>
                         </div>
-                        <div className="progress_card">
-                            <Image
-                                src="/images/aud.svg"
-                                alt=""
-                                className="progress_icon"
-                                width={48}
-                                height={48}
-                            />
-                            <p className="progress_type">Аудирование</p>
-                            <p className="your_progress">Твой прогресс <span className="progress_percent">51%</span></p>
-                            <div className="progress_bar">
-                                <div className="progress_fill"></div>
-                            </div>
-                        </div>
-                        <div className="progress_card">
-                            <Image
-                                src="/images/aud.svg"
-                                alt=""
-                                className="progress_icon"
-                                width={48}
-                                height={48}
-                            />
 
-                            <p className="progress_type">Письмо</p>
-                            <p className="your_progress">Твой прогресс <span className="progress_percent">51%</span></p>
+                        {/* Аудирование */}
+                        <div className="progress_card">
+                            <Image
+                                src="/images/aud.svg"
+                                alt=""
+                                className="progress_icon"
+                                width={48}
+                                height={48}
+                            />
+                            <p className="progress_type">{listening.label}</p>
+                            <p className="your_progress">
+                                Твой прогресс <span className="progress_percent">{listening.percent}%</span>
+                            </p>
                             <div className="progress_bar">
-                                <div className="progress_fill"></div>
+                                <div className="progress_fill" style={{width: `${listening.percent}%`}}/>
+                            </div>
+                        </div>
+
+                        {/* Письмо */}
+                        <div className="progress_card">
+                            <Image
+                                src="/images/pismo.svg"
+                                alt=""
+                                className="progress_icon"
+                                width={48}
+                                height={48}
+                            />
+                            <p className="progress_type">{writing.label}</p>
+                            <p className="your_progress">
+                                Твой прогресс <span className="progress_percent">{writing.percent}%</span>
+                            </p>
+                            <div className="progress_bar">
+                                <div className="progress_fill" style={{width: `${writing.percent}%`}}/>
                             </div>
                         </div>
                     </div>
@@ -90,57 +142,20 @@ export default function Home() {
                 <div className="user_top">
                     <p className="user_top_title">Топ 3 учеников</p>
 
-                   <div className="flex flex-col gap-2 h-[40vh] overflow-y-auto mb-10">
-                       <div className="user_top_item">
-                           <div className="user_top_item_info">
-                               <img src="/images/user_icon.png" alt="" className="user_top_item_icon" width={27} height={27}/>
-                               <div className="user_top_item_text">
-                                   <p className="user_top_item_name">Павел</p>
-                                   <p className="user_top_item_exp">1590 XP</p>
-                               </div>
-                           </div>
-                       </div>
-                       <div className="user_top_item">
-                           <div className="user_top_item_info">
-                               <img src="/images/user_icon.png" alt="" className="user_top_item_icon" width={27}
-                                    height={27}/>
-                               <div className="user_top_item_text">
-                                   <p className="user_top_item_name">Павел</p>
-                                   <p className="user_top_item_exp">1590 XP</p>
-                               </div>
-                           </div>
-                       </div>
-                       <div className="user_top_item">
-                           <div className="user_top_item_info">
-                               <img src="/images/user_icon.png" alt="" className="user_top_item_icon" width={27}
-                                    height={27}/>
-                               <div className="user_top_item_text">
-                                   <p className="user_top_item_name">Павел</p>
-                                   <p className="user_top_item_exp">1590 XP</p>
-                               </div>
-                           </div>
-                       </div>
-                       <div className="user_top_item">
-                           <div className="user_top_item_info">
-                               <img src="/images/user_icon.png" alt="" className="user_top_item_icon" width={27}
-                                    height={27}/>
-                               <div className="user_top_item_text">
-                                   <p className="user_top_item_name">Павел</p>
-                                   <p className="user_top_item_exp">1590 XP</p>
-                               </div>
-                           </div>
-                       </div>
-                       <div className="user_top_item">
-                           <div className="user_top_item_info">
-                               <img src="/images/user_icon.png" alt="" className="user_top_item_icon" width={27}
-                                    height={27}/>
-                               <div className="user_top_item_text">
-                                   <p className="user_top_item_name">Павел</p>
-                                   <p className="user_top_item_exp">1590 XP</p>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
+                    <div className="flex flex-col gap-2 h-[40vh] overflow-y-auto mb-10">
+                        {tops && tops.map((top, id) => (
+                            <div className="user_top_item" key={id}>
+                                <div className="user_top_item_info items-center">
+                                    <img src={top.telegram_photo_url} alt="" className="user_top_item_icon rounded-lg" width={40} height={40}/>
+                                    <div className="user_top_item_text">
+                                        <p className="user_top_item_name text-sm">{top.name}</p>
+                                        <p className="user_top_item_exp text-[12px]">{top.xp} XP</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+
+                    </div>
                 </div>
             </main>
         </div>

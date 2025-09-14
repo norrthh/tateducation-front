@@ -1,29 +1,28 @@
 
 import {create} from 'zustand';
 
-export interface User {
-    id: number,
-    telegram_id: number,
-    avatar: string,
-    full_name: string,
-    username: string,
-    ton_address: string,
-    is_verified: boolean,
-    pacman: {
-        coin: number
-    },
-    coin: number | null,
-    digger: {
-        coin: number
-    }
+export type UserLevel = 'junior' | 'middle' | 'senior';
+export type UserLang = 'ru' | 'tt';
+
+export interface TelegramUserDTO {
+    id: number;
+    telegram_id: string|number;
+    telegram_photo_url: string;
+    name: string;
+    xp: number;
+    status: number;           // при желании замени на enum
+    lang: UserLang;
+    level: UserLevel;
+    goal: number;
+    created_at: string;       // ISO-строка даты
+    updated_at: string;       // ISO-строка даты
 }
+
 interface useUserStore {
-    user: User;
-    userTop: User[];
-    userTop2: User[];
-    setUser: (user: User) => void;
-    setUserTop: (userTop: User[]) => void; // Принимает массив User
-    setUserTop2: (userTop2: User[]) => void;
+    user: TelegramUserDTO;
+    userTop: TelegramUserDTO[];
+    setUser: (user: TelegramUserDTO) => void;
+    setUserTop: (userTop: TelegramUserDTO[]) => void; // Принимает массив User
     bearerToken: string,
     setBearerToken: (bearerToken: string) => void,
 }
@@ -32,24 +31,19 @@ const useUserStore = create<useUserStore>((set) => ({
     user: {
         id: 0,
         telegram_id: 0,
-        avatar: '',
-        full_name: '',
-        username: '',
-        is_verified: false,
-        ton_address: '',
-        pacman: {
-            coin: 0
-        },
-        coin: 0,
-        digger: {
-            coin: 0
-        }
+        telegram_photo_url: '',
+        name: '',
+        status: 0,
+        lang: 'ru',
+        level: 'junior',
+        goal: 0,
+        xp: 0,
+        created_at: '',
+        updated_at: ''
     },
     userTop: [],
-    userTop2: [],
     setUser: (user) => set({ user }),
     setUserTop: (userTop) => set({ userTop }), // Устанавливает массив User
-    setUserTop2: (userTop2) => set({ userTop2 }),
     bearerToken: '',
     setBearerToken: (bearerToken) => set({ bearerToken }),
 }));

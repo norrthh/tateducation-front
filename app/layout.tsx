@@ -18,6 +18,9 @@ import {
 import {I18nProvider} from "@/i18n/I18nProvider";
 import Footer from "@/components/footer";
 import useSiteStore from "@/store/useSiteStore";
+import apiClient from "@/axios";
+import Preloader from "@/components/preloader";
+import {useLessonStore} from "@/store/useLessonStore";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -55,6 +58,7 @@ export default function RootLayout({
     const {setUser, setBearerToken} = useUserStore()
     const {setTelegramUser} = useTelegramStore()
     const footer = useSiteStore(s => s.footer);
+    const { setData } = useLessonStore();
 
     useEffect(() => {
         if (isTMA()) {
@@ -63,7 +67,6 @@ export default function RootLayout({
             const initUser = () => {
                 try {
                     const userTelegramData = retrieveLaunchParams().tgWebAppData?.user
-
                     setTelegramUser({
                         id: userTelegramData?.id,
                         first_name: userTelegramData?.first_name,
@@ -73,6 +76,18 @@ export default function RootLayout({
                         photo_url: userTelegramData?.photo_url,
                         lang: userTelegramData?.language_code
                     })
+
+                    apiClient.post('/v1/users/auth', {
+                        "init_data": retrieveRawInitData()
+                    }).then(res => {
+                        if (res.data.token) {
+                            setUser(res.data.user)
+                            setBearerToken(res.data.token)
+                            setData(res.data.data)
+
+                            setStatus(true)
+                        }
+                    });
                 } catch (error) {
                     console.log(error)
                     setStatus(false)
@@ -100,8 +115,7 @@ export default function RootLayout({
         return () => {
             try {
                 viewport.unmount?.();
-            } catch {
-            }
+            } catch {}
         };
     }, []);
 
@@ -110,20 +124,28 @@ export default function RootLayout({
         <body
             className={`${unbounded.variable} ${openSans.variable} font-[unbounded] antialiased max-w-xl mx-auto h-screen overflow-hidden text-white`}
         >
-        <div className="z-40 relative h-full px-4"
-             style={{'paddingTop': (insets.top !== 0 ? insets.top + 20 : 0)}}>
-            <I18nProvider>
-                <div className="mt-[31px] mb-[31px] h-full">
-                    {children}
-                </div>
+            <div className="z-40 relative h-full px-4"
+                 style={{'paddingTop': (insets.top !== 0 ? insets.top + 20 : 0)}}>
+                <I18nProvider>
+                    {status && (
+                        <>
+                            <div className="mt-[31px] mb-[31px] h-full">
+                                {children}
+                            </div>
 
-                {footer && (
-                    <>
-                        <Footer/>
-                    </>
-                )}
-            </I18nProvider>
-        </div>
+                            {footer && (
+                                <>
+                                    <Footer/>
+                                </>
+                            )}
+                        </>
+                    )}
+
+                    {!status && (
+                        <Preloader />
+                    )}
+                </I18nProvider>
+            </div>
         </body>
         </html>
     );
