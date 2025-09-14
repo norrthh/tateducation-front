@@ -39,7 +39,7 @@ export default function Home() {
     }
 
     useEffect(() => {
-        apiClient.get('/v1/users/tasks/').then(res => {
+        apiClient.get('/v1/users/tasks').then(res => {
             setTasks(res.data)
         })
     }, []);
