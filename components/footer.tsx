@@ -19,9 +19,13 @@ const Footer = () => {
                 <img src="/images/nav-img1.svg" alt="" className="nav-item-img" />
             </Link>
 
-            <a href="#" className="nav-item">
+            <Link
+                href="/"
+                className={`nav-item ${isActive("/translate", true) ? "active" : ""}`}
+                aria-current={isActive("/translate", true) ? "page" : undefined}
+            >
                 <img src="/images/nav-img3.svg" alt="" className="nav-item-img" />
-            </a>
+            </Link>
 
             <Link
                 href="/task"
@@ -37,9 +41,14 @@ const Footer = () => {
             <a href="#" className="nav-item">
                 <img src="/images/nav-img5.svg" alt="" className="nav-item-img" />
             </a>
-            <a href="#" className="nav-item">
+
+            <Link
+                href="/"
+                className={`nav-item ${isActive("/shop", true) ? "active" : ""}`}
+                aria-current={isActive("/shop", true) ? "page" : undefined}
+            >
                 <img src="/images/nav-img6.svg" alt="" className="nav-item-img" />
-            </a>
+            </Link>
         </footer>
     );
 };
