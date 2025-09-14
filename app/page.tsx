@@ -75,7 +75,7 @@ export default function Home() {
 
             <main className="flex flex-col gap-2 h-[80vh] overflow-y-auto">
                 <div className="chapter">
-                    <p className="chapter_type">Начальный</p>
+                    <p className="chapter_type">{ user.level}</p>
                     <p className="chapter_level">
                         {lessonData?.lesson?.name ? `Глава: ${lessonData.lesson.name}` : 'Глава'}
                     </p>

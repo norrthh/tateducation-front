@@ -5,7 +5,7 @@ import {useState} from 'react'
 
 export default function Shop() {
     return (
-        <div>
+        <div className="h-[80vh] overflow-y-auto">
             <h1 className="mb-2 pt-10 text-center text-lg font-bold text-white">Магазин</h1>
             <p className="shop_text">Здесь вы можете обменять <br />свои баллы на наш мерч</p>
             <div className="cards">
