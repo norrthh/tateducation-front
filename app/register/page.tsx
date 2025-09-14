@@ -4,12 +4,16 @@ import {useEffect, useState} from "react";
 import Image from "next/image";
 import {useI18n} from "@/i18n/I18nProvider";
 import useSiteStore from "@/store/useSiteStore";
+import apiClient from "@/axios";
+import useUserStore from "@/store/useUserStore";
 
 export default function Register() {
     const [step, setStep] = useState<number>(0);
     const {lang, setLang, t} = useI18n();
     const [level, setLevel] = useState<string>('junior')
     const [goal, setGoal] = useState<number>(10)
+
+    const {user} = useUserStore()
 
     const { setFooter } = useSiteStore();
     useEffect(() => { setFooter(false); }, [setFooter]);
@@ -186,7 +190,14 @@ export default function Register() {
                         if (step < 3) {
                             setStep(step + 1)
                         } else {
-                            window.location.href = '/'
+                            apiClient.post('/v1/users/register', {
+                                lang: lang,
+                                level: level,
+                                goal: goal,
+                                telegram_id: user.telegram_id
+                            }).then(res => {
+                                window.location.href = '/'
+                            })
                         }
                     }}>
                 {t("next")}
